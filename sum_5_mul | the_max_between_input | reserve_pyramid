@@ -18,7 +18,7 @@ void sum_5_mul()
 /*----c++primer---iostream-practice----reserve_pyramid-------start------------*/
 
 /*----c++primer---iostream-practice-----the_max_between_input---------start---------------*/
-void part2_test()
+void the_max_between_input()
 {
 	int i ;
 	int nums[10];
