@@ -39,11 +39,11 @@ void string_method_upper2()
 	string s = "hEllo,xiAOhui!welcome!";
 	decltype(s.size()) len = s.size();
 	unsigned i;
-	for(i = 0;i < len;i++)  //c此时是引用，是s自身所以可以修改原值
+	for(i = 0;i < len;i++)  
 	{
 		if(islower(s[i]))
 		{
-			s[i] = toupper(s[i]);
+			s[i] = toupper(s[i]);   //s[i]此时是自身，是s自身所以可以修改原值
 		}
 	}
 	cout << s << endl;
