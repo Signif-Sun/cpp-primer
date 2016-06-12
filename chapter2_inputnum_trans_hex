@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+/*----c++primer---------string_method_inputnum_trans_hex-----start---------*/
+void inputnum_trans_hex()
+{
+	string s = "0123456789ABCDEF";
+	decltype(s.size()) len = s.size();
+	string hex;
+	unsigned n;
+	auto k = len;
+	puts("pls input how many bits u need to trans!");
+	cin >> k;
+	puts("pls input the bits!");
+	for(decltype(n) i = 0; i < k;i++)  //需要转换的位数
+	{
+		cin >> n;		
+		if(n < len)  //自动忽略大于15的情况
+		{
+			hex += s[n];
+		}		
+	}
+	cout << hex << endl;
+}
+/*----c++primer---------string_method_inputnum_trans_hex-----over---------*/
