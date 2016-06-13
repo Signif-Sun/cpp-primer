@@ -1,0 +1,61 @@
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+
+/*----c++primer-------array_limit_for----------over------------*/
+void array_limit_for()
+{
+	const int row = 3;
+	const int col = 4;
+	int cnt = 0;
+	unsigned i,j;
+	int nums[row][col];
+	for(auto &r : nums)   //范围for循环,范围for循环的控制变量都应该是引用
+	{
+		for(auto &c :r)
+		{
+			c = cnt;   //c是引用所以此处直接用c
+			cnt++;
+		}
+	}
+	for(i = 0; i != row; i++)   //普通for循环
+	{
+		for(j =0; j != col; j++)
+		{
+			cout << nums[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+/*----c++primer-------array_limit_for----------over------------*/
+
+/*----c++primer-------array_typedef_or_using_for----------start-----------*/
+void array_typedef_or_using_for()
+{
+	const int row = 3;
+	const int col = 4;
+	int cnt = 0;
+	unsigned i,j;
+	int nums[row][col];
+	//using int_type = int[col];  //类型别名简化别名数组，和typedef一样，但是vs2012不支持
+	typedef int int_type[4];
+	for(auto &r : nums)
+	{
+		for(auto &c :r)
+		{
+			c = cnt;   //c是引用所以此处直接用c
+			cnt++;
+		}
+	}
+	
+	for(int_type *p = nums; p != end(nums); p++)   //nums的基本元素就是4个int的数组和int_type一致，所以设指针
+	{
+		for(auto *q = *p; q != end(*p); q++)
+		{
+			cout << *q << " ";
+		}
+		cout << endl;
+	}
+}
+/*----c++primer-------array_typedef_or_using_for----------over----------*/
