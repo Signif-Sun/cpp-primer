@@ -1,0 +1,35 @@
+#inclede <iostream>
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::vector;
+
+/*----c++primer--------------vector_iterator_search------------start-------------*/
+void vector_iterator_search()
+{
+	vector<string> worker;
+	//vector<string> stu{"zhang","san"};   //VS2012不支持列表初始化
+	worker.push_back("xiao");
+	worker.push_back("hui");
+	worker.push_back("c++");
+	worker.push_back("primer");
+	worker.push_back("programer");
+	string search = "primer";
+	//auto mid = worker.begin() + worker.size() / 2;
+	
+	auto iter = worker.begin();
+	for(; iter != worker.end() && *iter != search; iter++)
+	{
+		;
+	}
+	auto n = iter - worker.begin();
+	auto it_rem = worker.begin();
+	*it_rem = "sunxiao";
+	cout << n << "\n" << worker[0] <<endl;
+}
+
+/*----c++primer--------------vector_iterator------------over-------------*/
