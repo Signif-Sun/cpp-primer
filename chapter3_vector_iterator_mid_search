@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::vector;
+
+/*----c++primer-------vector_iterator_mid_search----------start------------*/
+void vector_iterator_mid_search()
+{
+	vector<int> nums(100);
+	auto iter = nums.begin();
+	int i = 0;
+	int search = 45;
+	while(iter != nums.end())
+	{
+		*iter += i;
+		iter++;
+		i++;
+	}
+	auto mid = nums.begin() + nums.size() / 2;
+	auto begin = nums.begin();
+	auto end = nums.end();
+	while(mid != end && *mid != search)
+	{
+		if(*mid > search)
+		{
+			end = mid - 1;
+		}
+		else
+			begin = mid;
+		mid = begin + (end - begin) / 2;
+	}
+	cout << *mid <<endl;
+}
+/*----c++primer-------vector_iterator_mid_search----------over------------*/
