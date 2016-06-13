@@ -36,7 +36,6 @@ void array_typedef_or_using_for()
 	const int row = 3;
 	const int col = 4;
 	int cnt = 0;
-	unsigned i,j;
 	int nums[row][col];
 	//using int_type = int[col];  //类型别名简化别名数组，和typedef一样，但是vs2012不支持
 	typedef int int_type[4];
