@@ -25,15 +25,26 @@ int find_char_nums_indextoo(string s,char c,int &index)
 	}
 	return cnt;
 }
+
+//判断是否是个句子，逻辑是判断是否只含有一个‘！’，但还有在判断字符串总数之后，然后减一位位置上是否是标点符号判断。
+bool is_sentence(const string s)
+{
+	int ctr;
+	return find_char_nums_indextoo(s,'!',ctr) == 1;
+}
+
+
 //测试函数
 void find_char_test()
 {
-	string s = "xiao hui is a sunshine boy!";
+	string s = "xiao hui is a sunshine boy.";
 	char c = 'o';
 	int index;
 	int cnt;
+	bool f;
+	f = is_sentence(s);
 	cnt = find_char_nums_indextoo(s,c,index);
-	cout << cnt << "\n" << index <<endl;
+	cout << cnt << "\n" << index << "\n" <<  f << endl;
 }
 
 /*----c++primer------p190_find_char_nums_indextoo----------start--------*/
