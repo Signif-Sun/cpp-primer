@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+//以下程序还是有问题需要调试
+/*----c++primer-------5.23-5.25_try_error----------start--------*/
+void try_error()
+{
+	int item1,item2,res;
+	while(cin >> item1 >>item2)
+	{
+		try{
+			res = item1 / item2;
+			cout << res << endl;
+		}
+		catch(runtime_error err){   //运行时异常
+			cout << err.what() 
+				<< "item2 can't be zero!"<< endl;
+			cout << "please input 'n' to exit!" << endl; //询问继续循环还是退出
+			char c;
+			cin >> c;
+			if(!cin || c == 'n')
+				break;
+		}
+	}
+}
+/*----c++primer-------5.23-5.25_try_error----------over--------*/
