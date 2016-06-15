@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+/*----c++primer------p190_find_char_nums_indextoo----------start--------*/
+
+//此处第三个参数必须设置引用，才可以保留位置值
+int find_char_nums_indextoo(string s,char c,int &index)
+{
+	auto len = s.size();
+	int cnt = 0;
+	enum mark{NO,YES};   //没有bool类型，采取enum枚举类型代替
+	enum mark flag = YES;
+	for(decltype(len) i = 0;i != len; i++)
+	{
+		if(s[i] == c)
+		{
+			if(flag)   //使用flag只为了记录第一个出现位置
+			{
+				index = i;
+				flag = NO;   
+			}
+			cnt++;
+		}
+	}
+	return cnt;
+}
+//测试函数
+void find_char_test()
+{
+	string s = "xiao hui is a sunshine boy!";
+	char c = 'o';
+	int index;
+	int cnt;
+	cnt = find_char_nums_indextoo(s,c,index);
+	cout << cnt << "\n" << index <<endl;
+}
+
+/*----c++primer------p190_find_char_nums_indextoo----------start--------*/
