@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+/*---这是一个假装验证秘密的程序-----c++primer——P203----start---------*/
+//输出验证结果的vector
+vector<string> vec_pasword_pass(string s)
+{
+	vector<string> pas;
+	pas.push_back("the");
+	pas.push_back("program");
+	pas.push_back("passed!");
+	vector<string> fai;
+	fai.push_back("the");
+	fai.push_back("program");
+	fai.push_back("failed!");
+	if(s == "password")
+		return pas;
+	else
+		return fai;
+}
+/*-迭代器的方式---打印vector中的成员------------------*/
+void cout_vec(vector<string> vs)
+{
+	auto beg = vs.begin();
+	auto end = vs.end();
+	while(beg != end)
+	{
+		cout << *beg << " " ;
+		beg++;
+	}
+	cout << endl;
+}
+//驱动程序
+void vec_pasword_pass_test()
+{
+	string s = "password";
+	vector<string> status;
+	status = vec_pasword_pass(s);
+	cout_vec(status);
+}
+/*---这是一个假装验证秘密的程序-----c++primer——P203----over---------*/
+
