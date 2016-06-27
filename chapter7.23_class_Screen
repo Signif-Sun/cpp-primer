@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+
+/*----------------chapter7.23---------编写自己的Screen类-----------start------------*/
+using namespace std;
+class Screen{
+public:
+	typedef size_t pos_st;
+/*-----------------自定义初始化类--------------------*/
+	Screen(pos_st ht,pos_st wd,char c):height(ht),width(wd),contents(ht * wd,c){};
+/*-----------------移动当前的坐标位置----------------*/
+	Screen &Screen::move(pos_st row,pos_st col)
+	{
+		pos_st pos = row * width + col;
+		current_pos = pos;
+		return *this;
+	}
+/*---------------获取当前坐标的字符---------------*/
+	char get()
+	{return contents[current_pos];}
+/*---------------获取指定位置上的字符---------------*/
+	inline char get(pos_st row,pos_st col);
+	//friend inline char get(Screen::pos_st row,Screen::pos_st col);
+	//Screen &set(pos_st row,pos_st col,char c);
+/*--------------更改指定位置上的字符-----------------*/
+	Screen &Screen::set(pos_st row,pos_st col,char c)
+	{
+		pos_st pos = row * width + col;
+		contents[pos] = c;
+		return *this;
+	}
+
+private:
+	pos_st height;
+	pos_st width;
+	pos_st current_pos;
+	string contents;	
+};
+/*------类外部定义，函数作用是获取某个位置处的字符-------------*/
+char Screen::get(pos_st row,pos_st col)
+{
+	pos_st pos = row * width + col;
+	return contents[pos];
+}
+/*---------------测试Screen类的驱动函数-------------*/
+void screen_t()
+{
+	char c;
+	//类的初始化,其实还是从0开始的
+	Screen screen(4,5,'f');
+	//类的调用
+	c = screen.get(2,3);
+	cout << c << endl;
+	//更改某处的值
+	screen.set(2,3,'c');
+	//回去更改后的值
+	c = screen.get(2,3);
+	cout << c << endl;
+	screen.set(2,5,'x');
+	//移动到某处
+	screen.move(2,5);
+	//获取当前位置的值
+	c = screen.get();
+	cout << c << endl;
+}
+/*----------------chapter7.23---------编写自己的Screen类-----------over-------------*/
