@@ -6,8 +6,22 @@ using namespace std;
 class Screen{
 public:
 	typedef size_t pos_st;
-/*-----------------自定义初始化类--------------------*/
+/*----------------默认构造函数--------------------*/
+	Screen(){};
+/*-----------------自定义初始化类---自定义构造函数--------------------*/
 	Screen(pos_st ht,pos_st wd,char c):height(ht),width(wd),contents(ht * wd,c){};
+/*-----------------自定义初始化类--------------------*/	
+	Screen &get_contents(istream &is,string &conts)
+	{
+		is >> conts;
+		return *this;
+	}
+/*-----------------打印类中内容--------------------*/
+	Screen &display(ostream &os) const
+	{
+		do_display(os);
+		return *this;
+	}
 /*-----------------移动当前的坐标位置----------------*/
 	Screen &Screen::move(pos_st row,pos_st col)
 	{
@@ -29,12 +43,18 @@ public:
 		contents[pos] = c;
 		return *this;
 	}
-
+/*--------------允许用户访问和修改contents内容-----------*/
+	string contents;
 private:
 	pos_st height;
 	pos_st width;
 	pos_st current_pos;
-	string contents;	
+/*-------------避免重复工作打印其中的内容函数-----------*/	
+	void do_display(ostream &os)
+	{
+		os << contents;
+	}
+//	string contents;	
 };
 /*------类外部定义，函数作用是获取某个位置处的字符-------------*/
 char Screen::get(pos_st row,pos_st col)
@@ -48,6 +68,8 @@ void screen_t()
 	char c;
 	//类的初始化,其实还是从0开始的
 	Screen screen(4,5,'f');
+	//使用非初始化的自定义内容，依然保持初始化的4行5列特性
+	screen.get_contents(cin,screen.contents); 
 	//类的调用
 	c = screen.get(2,3);
 	cout << c << endl;
