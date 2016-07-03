@@ -2,8 +2,6 @@
 #include <string>
 
 using namespace std;
-//类内静态成员，内部定义，外部初始化
-double Account::account_raise = 2.68;
 
 void account_t();
 //Account类声明
@@ -30,6 +28,9 @@ class Account
   	double account_amount;    //本金
   	static double account_raise;   //利息
 };
+
+//类内静态成员，内部定义，外部初始化，这里类定义完了才可以初始化嘛
+double Account::account_raise = 2.68;
 
 void account_t()
 {
