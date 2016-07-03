@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+//类内静态成员，内部定义，外部初始化
+double Account::account_raise = 2.68;
+
+void account_t();
+//Account类声明
+class Account
+{
+  public:
+  //设置友元函数，访问内部私有类
+  	friend void account_t();  
+  	//自定义类内默认构造函数
+  	Account(){};
+  	//自定义类内构造函数
+  	Account(string acc_na,double acc_amo):account_name(acc_na),account_amount(acc_amo){};
+  	//获取本金和利息和
+  	double amount()
+  		{return account_amount += account_amount * account_raise;}
+  		//获取利率值
+  	static double rate()
+  	{return account_raise;}
+  	//获取账户名字
+  	string getname()
+  	{return account_name;}
+  private:
+  	string account_name;    //账号名字
+  	double account_amount;    //本金
+  	static double account_raise;   //利息
+};
+
+void account_t()
+{
+  	//初始化账户
+  	Account account("TSP1504051XX",27420.34);
+  	//获取帐户名
+  	cout << account.getname() << endl;
+  	printf("%10.4lf\n",account.amount());   //保留四位有效数字
+  	account.account_amount = 27420.34;
+  	cout << account.amount() << endl;  //浮点数保留6位有效数字哦
+  	Account::account_raise = 9.78;   //更改利率
+  	cout << Account::account_raise;
+}
