@@ -1,0 +1,62 @@
+/*---------测试使用的联系人名单----------*/
+signif_phones.txt
+sunxiaohui 66784895 13001116456
+shaozipei 85123489 18766442234
+wangchao 295391722 18353114613
+
+/*--------联系人所需要的头文件-----------*/
+signif_phones.h
+
+#include <string> 
+
+using namespace std;
+/*--------struct类默认第一个访问限制符前都是public-----------*/
+struct signif_phones
+{
+	string name;
+	string qq_num;
+	string phone_num;
+};
+
+/*---------所需的istringstream的函数，其中包括c语言部分----------*/
+void contrast_test();
+
+/*-------------------*/
+#include "signif_phones.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+//#include <cstdio>
+
+/*---------chapter8_istringstream测试---使用c语言部分----p288---------start---------*/
+void contrast_test()
+{
+/*---------创建容纳该组联系人的模板类型----------*/
+	vector<signif_phones> info;
+	string words,temp;
+	char line[100];
+	FILE *file;
+	fopen_s(&file,"signif_phones.txt","r");
+	/*fgets(line,100,file);
+	puts(line);*/
+	/*--------利用循环和fgets来读取signif_phones.txt每一行的数据-----------*/
+	while(fgets(line,100,file))
+	{
+	/*----------首先建立放入模板类型vector中的联系人---------*/
+		signif_phones people;
+		words = line;
+		/*--------使用record保存words的一个拷贝-----------*/
+		istringstream record(words);
+		/*-------istingstream类型每次只是写入一个string，遇到空格就会停止------------*/
+		record >> people.name;
+		//依次写入相关参数中
+		record >> people.qq_num;
+		record >> people.phone_num;
+		/*---------将创建的联系人push_back从尾部添加到vector中联系人组info中去----------*/
+		info.push_back(people);
+	}
+	//输出测试
+	cout << info[0].name << endl;
+}
+/*---------chapter8_istringstream测试---使用c语言部分----p288---------end--------*/
