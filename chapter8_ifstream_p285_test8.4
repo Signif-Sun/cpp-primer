@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+/*---------chapter8_ifstream测试-------p285--test8.4-------start--------*/
+int fstream_t()
+{
+/*------------将ReadMe.txt文本写入一个ifstream流中--------------*/
+	ifstream in("ReadMe.txt");
+	if (!in)
+	{
+		cerr << "the file isn't opened!";
+		return -1; //异常情况退出
+	}
+	vector<string> info;
+	string templine;
+/*------------使用getline从ifstream流中读取数据--------------*/
+	while (getline(in, templine))
+	{
+		info.push_back(templine);
+	}
+	in.close();//关闭流
+	//测试！！
+	cout << info[1];
+}
+/*---------chapter8_ifstream测试-------p285--test8.4-------start--------*/
