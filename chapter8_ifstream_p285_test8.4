@@ -25,5 +25,21 @@ int fstream_t()
 	in.close();//关闭流
 	//测试！！
 	cout << info[1];
+	
+/*************************向文件中写入内容的方法**********************/
+/*------------文件的打开方式一定要加入名称空间-----方式1---------*/
+	ofstream ofresult("signif_test.txt ", ofstream::app);
+/*------------使用ofstream向文件中写入内容---以下写入两次-----------*/
+	ofresult << "123" << "significance" << endl;
+	ofresult << "the second once" << endl;
+	ofresult.close();
+
+/****************向文件中写入内容的方法***以下方法也是ok*****方式2**************/
+	ofstream dataFile;                    //定义文件操作对象
+	dataFile.open("signif_test.txt", ios::app);   //创建一个文件
+	dataFile << "sunxiaohui" << endl;               // 向文件写入数据
+	dataFile.close();                   //关闭文件
+
+	return 0;//放在最后，要不执行到这里就结束了
 }
 /*---------chapter8_ifstream测试-------p285--test8.4-------end--------*/
