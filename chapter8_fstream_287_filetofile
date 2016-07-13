@@ -1,0 +1,33 @@
+#include <string>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+/*---------chapter8_fstream_filetofile-------p287_filetofile-------start--------*/
+int fstream_ftf()
+{
+/*---------使用ifstream将文件写入流in中----------*/
+	ifstream in("signif_phones.txt");
+/*----------判断in流是否被打开---------*/
+	if (!in)
+	{
+		cerr << "the file can't be open!" << endl;
+		return -1;
+	}
+/*---------定义接收in流中的字符串----------*/
+	string tmpline;
+/*----------定义输出流out---------*/
+	ofstream out;
+	out.open("signif_test.txt",ios::app);
+	while (getline(in, tmpline))
+	{
+		/*----------采取循环的方式向流中写入字符串tmpline---------*/
+		out << tmpline << endl;
+	}
+	//关闭输入输出流
+	in.close();
+	out.close();
+	return 0;
+}
+/*---------chapter8_fstream_filetofile-------p287_filetofile-------end--------*/
