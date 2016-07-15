@@ -1,0 +1,267 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+/*题目是：将一串数字转化为中国汉字的数字，银行数值转换*/
+/*例如：20394020 读作：贰仟零弎拾玖万肆仟零贰拾*/
+/*--------------------cpp_bank_digitstransform--使用c++语言----亿以内数值-----start---------*/
+void digit_trm(int n)
+{
+	int cnt = 0;
+	int tmp1 = n;
+	int i = 0;
+	int bitnum,k;
+	while (tmp1 > 0)
+	{
+		tmp1 /= 10;
+		cnt++;
+	}
+	vector<string>  chn_vec = { "零","壹" ,"贰" ,"弎" ,"肆" ,"伍" ,"陆" ,"柒" ,"捌" ,"玖","拾" };
+	vector<string> unit_vec = { "","拾","百","仟","万" };
+	vector<int> digit_vec(cnt);   //需要初始化
+	//vector<int> tmp_vec(cnt);
+	vector<int> three_vec(cnt);
+	
+	while (n > 0)
+	{
+		digit_vec[i] = n % 10;
+		n /= 10;
+		i++;
+	}
+	bitnum = digit_vec.size();	
+
+	/*位数在5-9位之间*/
+	if (bitnum > 5 && bitnum < 9)
+	{
+		//万位和个位均不为0
+		if (digit_vec[4] != 0 && digit_vec[0] != 0)
+		{
+			for (k = bitnum-1; k >= 4; k--)
+			{
+				//如果该位不等于0那么就连同单位输出
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k - 4];
+				}
+				//如果该位等于0那么单位不输出
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << unit_vec[4];
+			for (k = 3; k >= 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+
+		//万位和个位均为0
+		if (digit_vec[4] == 0 && digit_vec[0] == 0)
+		{
+			for (k = bitnum - 1; k > 4; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k - 4];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << unit_vec[4];
+			for (k = 3; k > 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+
+		//万位不为0和个位为0
+		if (digit_vec[4] != 0 && digit_vec[0] == 0)
+		{
+			for (k = bitnum - 1; k >= 4; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k - 4];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << unit_vec[4];
+			for (k = 3; k > 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+
+		//万位为0和个位不为0
+		if (digit_vec[4] == 0 && digit_vec[0] != 0)
+		{
+			for (k = bitnum - 1; k > 4; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k - 4];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << unit_vec[4];
+			for (k = 3; k >= 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+	}
+
+	/*位数为5位*/
+	if (bitnum == 5)
+	{
+		//个位不为0
+		if (digit_vec[0] != 0)
+		{
+			k = bitnum;
+			cout << chn_vec[digit_vec[k-1]];
+			cout << unit_vec[4];
+			for (k = 3; k >= 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+		//个位为0
+		if (digit_vec[0] == 0)
+		{
+			k = bitnum;
+			cout << chn_vec[digit_vec[k - 1]];
+			cout << unit_vec[4];
+			for (k = 3; k > 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+	}
+
+	/*位数小于5位大于0位*/
+	if (bitnum < 5 && bitnum > 1)
+	{
+		//个位不为0
+		if (digit_vec[0] != 0)
+		{
+			for (k = 3; k >= 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+		//个位为0
+		if (digit_vec[0] == 0)
+		{
+			for (k = 3; k > 0; k--)
+			{
+				if (digit_vec[k] != 0)
+				{
+					cout << chn_vec[digit_vec[k]] << unit_vec[k];
+				}
+				else
+				{
+					cout << chn_vec[digit_vec[k]];
+				}
+			}
+			cout << "圆整" << endl;
+		}
+	}
+
+	/*位数等于1位*/
+	if (bitnum == 1)
+	{
+		//个位不为0
+		if (digit_vec[0] != 0)
+		{
+			cout << chn_vec[digit_vec[0]];
+			cout << "圆整" << endl;
+		}
+		//个位为0
+		if (digit_vec[0] == 0)
+		{
+			cout << "零圆整" << endl;
+		}
+	}
+
+	/*位数为其他情况,多于9位*/
+	if (bitnum >= 9)
+	{
+		cout << "hi，do you need any friends? Me,me,me!!!" << endl;
+	}
+}
+//测试函数
+void digit_test()
+{
+	int n;
+	scanf_s("%d",&n);
+	digit_trm(n);
+}
+
+/*--------------------cpp_bank_digitstransform--使用c++语言---------end----------*/
