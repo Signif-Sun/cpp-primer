@@ -1,0 +1,86 @@
+#include "stdafx.h"
+#include <iostream>
+#include "signif_head.h"
+
+using namespace std;
+
+/*----cpp_matraxcycle_write----顺时针打印螺旋矩阵或者说是螺旋数组-------start--------------*/
+
+//方法一：如下所示，采取四边组成相同数目，然后采取递归的方式
+//方法二：采取嵌套循环，外层循环控制组成几个环状口字，内部依然采取四边组成4个for循环的方法
+void matrix_write(int **arr_int, int x, int y, int cnt, int n)
+{
+	int i, j;
+	if (n <= 0)
+	{
+		return;
+	}
+	if (n == 1)
+	{
+		arr_int[x][y] = cnt;
+		return;
+	}
+	//上边
+	for (i = x; i < x+n-1; i++)
+	{
+		arr_int[y][i] = cnt;
+		cnt++;
+	}
+	//右边
+	for (j = y; j < y+n-1; j++)
+	{
+		arr_int[j][x+n-1] = cnt;
+		cnt++;
+	}
+	//下边
+	for (i = x+n-1; i > x; i--)
+	{
+		arr_int[y+n-1][i] = cnt;
+		cnt++;
+	}
+	//右边
+	for (j =y+n-1; j > y; j--)
+	{
+		arr_int[j][x] = cnt;
+		cnt++;
+	}
+	//每次向内一层就会减少两个元素
+	n -= 2;
+	//定位内层的左上角顶点的坐标
+	x += 1;
+	y += 1;
+	matrix_write(arr_int,x,y,cnt, n);
+}
+
+void martix_test()
+{
+	int i = 0, j = 0;
+	int n;
+	scanf_s("%d", &n);
+	//二维数组定义后需要分配内存空间，否则大小未知，无法初始化也无法使用
+	int ** arr_int;
+	arr_int = (int**)malloc(n * sizeof(int*));
+	for (i = 0; i < n; i++)
+	{
+		arr_int[i] = (int*)malloc(n * sizeof(int));
+	}
+	//需要将n值控制为正数，否则没有意义
+	if (n > 0)
+	{
+		matrix_write(arr_int, 0, 0, 1, n);
+		for (i = 0; i < n; i++)
+		{
+			for (j = 0; j < n; j++)
+			{
+				printf("%3d", arr_int[i][j]);
+			}
+			puts("");
+		}
+	}
+	else
+	{
+		puts("你是傻逼吗？嘻嘻(●'◡'●)");
+	}
+	
+}
+/*----cpp_matraxcycle_write----顺时针打印螺旋矩阵或者说是螺旋数组-------end-------------------*/
