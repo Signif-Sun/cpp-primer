@@ -1,0 +1,49 @@
+#include <string>
+#include <list>
+#include <deque>
+#include <iostream>
+using namespace std;
+
+/*-----------chapter_9-----p309_test1-2----------start----------------*/
+void chp9_tset1()
+{
+	string tmp;
+	//此处list和deque的不同点在于是否支持快速访问也就是是否可以采取for循环方式读出
+	deque<string> dstr(5);  //此处需要初始化，否则下面迭代器为空的，尾后
+	auto itde = dstr.begin();
+	//记录一下原来迭代器的位置
+	auto itde1 = itde;
+	//设置结束标记over
+	while (cin >> tmp && tmp != "over")
+	{
+		*itde = tmp;
+		itde++;
+	}
+	while (itde1 != dstr.end())
+	{
+		cout << *itde1 << endl;
+		itde1++;
+	}
+}
+/*-----------chapter_9-----p309_test1-2----------end----------------*/
+
+/*-----------chapter_9-----p309_test1-2----------start----------------*/
+void chp9_tset2()
+{
+	string tmp;
+	//此处list和deque的不同点在于是否支持快速访问也就是是否可以采取for循环方式读出
+	deque<string> dstr;  //push_back此处bu需要初始化
+
+	//push_back方式添加，又快又好
+	while (cin >> tmp && tmp != "over")  //设置结束标记over
+	{
+		dstr.push_back(tmp);
+	}
+	auto itde = dstr.begin();
+	while (itde != dstr.end())
+	{
+		cout << *itde << endl;
+		itde++;
+	}
+}
+/*-----------chapter_9-----p309_test1-2----------end----------------*/
