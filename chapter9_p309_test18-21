@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-/*-----------chapter_9-----p309_test1-2----------start----------------*/
+/*-----------chapter_9-----p309_test18-19----------start----------------*/
 void chp9_tset1()
 {
 	string tmp;
@@ -25,9 +25,9 @@ void chp9_tset1()
 		itde1++;
 	}
 }
-/*-----------chapter_9-----p309_test1-2----------end----------------*/
+/*-----------chapter_9-----p309_test18-19----------end----------------*/
 
-/*-----------chapter_9-----p309_test1-2----------start----------------*/
+/*-----------chapter_9-----p309_test18-19----------start----------------*/
 void chp9_tset2()
 {
 	string tmp;
@@ -46,4 +46,23 @@ void chp9_tset2()
 		itde++;
 	}
 }
-/*-----------chapter_9-----p309_test1-2----------end----------------*/
+/*-----------chapter_9-----p309_test18-19----------end----------------*/
+
+/*-----------chapter_9.21-----p309_test9.21----------start----------------*/
+//该方法弥补了vector不支持在头部添加元素和不支持push_front的缺陷
+void vector_pushfront()
+{
+	vector<int> vint = { 1,2,3,4 };
+	int tmp;
+	auto itve = vint.begin();
+	while (cin >> tmp && tmp != 110)
+	{
+		//函数返回的迭代器每次都是指向新添加元素
+		itve = vint.insert(itve, tmp);
+	}
+	for (int i = 0; i < vint.size(); i++)
+	{
+		cout << vint[i] << endl;
+	}
+}
+/*-----------chapter_9.21-----p309_test9.21----------end----------------*/
