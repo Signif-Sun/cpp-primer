@@ -1,0 +1,58 @@
+#include <list>
+#include <iostream>
+ 
+using namespace std;
+
+/*-----------chapter9-----p315_test9.27前向列表删除奇数正向打印--------------start------------------*/
+void forward_delodd()
+{
+	int ia[] = { 0,1,2,3,4,5,7,8,13,21,55 };
+	int i = 0;
+	//巧妙设计用sizeof方法来获取字int数组的长度
+	int len = sizeof(ia) / sizeof(int);
+	forward_list<int> flint = {};
+	//使用vector承载去除奇数之后的int值然后使用反响迭代器rbegin()即可实现正向输出
+	vector<int> vint;
+	//循环方式读取字符数组并push_back写入不需要初始化
+	for (; i < len; i++)
+	{
+		/**itflint = ia[i];
+		itflint++;*/
+		flint.push_front(ia[i]);
+	}
+	auto itbfli = flint.before_begin();
+	auto itfli = flint.begin();
+
+	//避免全是奇数，结束了还在循环报错了
+	while (itfli != flint.end())
+	{
+		//奇数才会执行，因为偶数时候为0了
+		if (*itfli % 2)
+		{
+			//删除迭代器位置元素，首前迭代器仍然为仍然是原指向元素迭代器的前一位
+			itfli = flint.erase_after(itbfli);
+		}
+		else
+		{
+			itbfli = itfli;
+			itfli++;
+		}
+	}
+	auto itnewfl = flint.begin();
+	//添加到vector中----下述方法实现了向其中直接插入，简单粗暴
+	while (itnewfl != flint.end())
+	{
+		vint.push_back(*itnewfl);
+		itnewfl++;
+	}
+	//上述whil函数实现了下述方法同样的功能
+	//vint.insert(vint.begin(), flint.begin(), flint.end());
+	//反向迭代器读出
+	auto ritvi = vint.rbegin();
+	while (ritvi != vint.rend())
+	{
+		cout << *ritvi << endl;
+		ritvi++;
+	}
+}
+/*-----------chapter9-----p315_test9.27前向列表删除奇数正向打印------------end------------------*/
