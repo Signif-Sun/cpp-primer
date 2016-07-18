@@ -1,0 +1,44 @@
+#include <list>
+#include <iostream>
+
+using namespace std;
+
+/*-----------chapter_9-----p312_test9.26------------start----------------*/
+//将数组中的元素写入list中，并删除list中的奇数部分，迭代器写出
+void iarrtolist_delodd()
+{
+	int ia[] = { 0,1,2,3,4,5,7,8,13,21,55 };
+	int i = 0;
+	//巧妙设计用sizeof方法来获取字int数组的长度
+	int len = sizeof(ia) / sizeof(int);
+	list<int> lint;
+	//循环方式读取字符数组并push_back写入不需要初始化
+	for (; i < len; i++)
+	{
+		lint.push_back(ia[i]);
+	}
+	auto itli = lint.begin();
+	//避免全是奇数，结束了还在循环报错了
+	while (itli != lint.end())
+	{
+		//奇数才会执行，因为偶数时候为0了
+		if (*itli % 2)
+		{
+//删除迭代器位置元素，i迭代器失效，并用该迭代器重新记录指向删除元素后第一个元素的迭代器
+			itli = lint.erase(itli); 
+		}
+		else
+		{
+			itli++;
+		}
+	}
+	//重新记住原迭代器位置，遍历读出，list不支持快速随机访问---所以使用迭代器
+	auto itnewl = lint.begin();
+	while (itnewl != lint.end())
+	{
+		cout << *itnewl << endl;
+		itnewl++;
+	}
+}
+
+/*-----------chapter_9-----p312_test9.26--------------end-------------------*/
