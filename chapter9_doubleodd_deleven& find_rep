@@ -1,0 +1,62 @@
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+/*-----------chapter9-----p317_test9.34删除偶数，double奇数-----------start-----------------*/
+
+void doubleodd_deleven()
+{
+	vector<int> vint = { 0,1,2,3,4,5,6,7,8 };
+	auto itvb = vint.begin();
+	while (itvb != vint.end())
+	{
+		//奇数来执行以下操作
+		if (*itvb % 2)
+		{
+			//一定要记住迭代器位置，否则叠加后原迭代器失效了
+			itvb = vint.insert(itvb, *itvb);
+			//增加两个元素，所以一定要迭代器相加两次
+			itvb++;
+			itvb++;
+		}
+		else
+		{
+			//删除之后迭代器返回删除后面一个迭代器
+			itvb = vint.erase(itvb);
+			//itvb++;
+		}
+	}
+	auto newitvb = vint.begin();
+	while (newitvb != vint.end())
+	{
+		cout << *newitvb << " ";
+		newitvb++;
+	}
+}
+/*-----------chapter9-----p317_test9.34删除偶数，double奇数----------end--------------*/
+
+/*-----------chapter9-----p324_test9.44删除string中指定元素替换成新元素(string)---------start------------*/
+void find_rep(string &s, string &oldval, string &newval)
+{
+	int p = 0;
+	//采取p来记住find查找元素的位置，以便于从找到元素之后再来查找
+	while ((p = s.find(oldval, p)) != string::npos)  //如果找到接下来操作
+	{
+		//replace替换的超级好的办法啊
+		s.replace(p, oldval.size(), newval);
+		p += newval.size();//跳过新元素
+	}
+}
+//测试函数
+void find_rep_t()
+{
+	string s = "signifsunxhsigsun";
+	string oldval = "sig";
+	string newval = "sharp";
+	cout << s << endl;
+	find_rep(s, oldval, newval);
+	cout << s << endl;
+}
+/*-----------chapter9-----p324_test9.44删除string中指定元素替换成新元素(string)----------end--------------*/
