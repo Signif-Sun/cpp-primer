@@ -1,0 +1,72 @@
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <stack>
+
+using namespace std;
+
+/*-----------chapter9-----p324_test9.44删除string中指定元素替换成新元素(string)----------end--------------*/
+
+string finddigit(string &s, string chs)
+{
+	int pos = 0;
+
+	string ditres;
+	while ((pos = s.find_first_not_of(chs, pos)) != string::npos)
+	{
+		ditres.push_back(s[pos]);
+		//cout << s[tmp] << endl;
+		pos++;
+	}
+	return ditres;
+}
+
+/*-----------chapter9-----p331_test9.52查看{是否匹配，如果不匹配则提示哪一行不匹配----------start-------------*/
+//采取堆栈的方式解决，检测'{'到了进栈'}'出栈
+void stackcheck(string &text)
+{
+	stack<int> sti;//定义栈
+	int i = 1;
+	ifstream file;//读取文件
+	file.open(text, fstream::in);
+	//auto filec = file;
+	string tmpline;
+	while (getline(file, tmpline))
+	{
+		int p = 0;//记住每次p重新创建，因为只有这样才能检测一行所有元素
+		cout << tmpline << endl;
+		//采取不断访问一行中看着是否有字符'{'
+		while ((p = tmpline.find_first_of('{', p)) != string::npos)
+		{
+			sti.push(i);
+			//cout << sti.top() << endl;
+			p++;
+		}
+		i++;
+	}
+	ifstream file2; //重新定义一遍文件，不明白为什么还要在读取一次？？||  疑惑啊！！！
+	file2.open(text, fstream::in);
+	while (getline(file2, tmpline))
+	{
+		int p = 0;
+		while ((p = tmpline.find_first_of('}', p)) != string::npos)
+		{
+			sti.pop();//对应上述的'{'一一对应删除
+			p++;
+		}
+	}
+	//查看栈是否是空，不是空说明不匹配，都展示一下
+	if (!sti.empty())
+	{
+		while (!sti.empty())
+		{
+			cout << "the wrong line is in " << sti.top() << endl;
+			sti.pop();
+		}
+	}
+	else//栈为空说明匹配
+	{
+		cout << "wonderful! it is matched!!" << endl;
+	}
+}
+/*-----------chapter9-----p331_test9.52查看{是否匹配，如果不匹配则提示哪一行不匹配----------end------------*/
