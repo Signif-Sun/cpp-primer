@@ -1,0 +1,50 @@
+#include <string>
+#include <vector>
+#include<iostream>
+#include <algorithm>
+//#include <iterator>
+
+using namespace std;
+
+//作为比较长短的第三个参数
+bool isLongCmp(const string &str1, const string &str2)
+{
+	return str1.size() < str2.size();
+}
+//将重复的放在非重复后面，使用该方法然后erase掉返回迭代器以及结束迭代器之间元素
+void sortUni(vector<string> &vstr)
+{
+	auto itb = vstr.begin();
+	auto ite = vstr.end();
+	sort(itb, ite);
+	auto uni = unique(itb, ite);
+	vstr.erase(uni, vstr.end());//容器成员函数
+}
+//打印函数
+void priVec(vector<string> &vstr)
+{
+	for (auto cont : vstr)
+	{
+		cout << cont << " ";
+	}
+}
+//长短顺序排序
+void shunxRes(vector<string> &vstr)
+{
+	sortUni(vstr);
+	stable_sort(vstr.begin(), vstr.end(), isLongCmp);
+}
+//将超过某些长度的干掉，使用了lambda作为谓词（作为第三参数）
+void limitLen(vector<string> &vstr, size_t sz)
+{
+	auto itsiz = find_if(vstr.begin(), vstr.end(), [sz](string &str) {
+		return str.size() >= sz; });//lambda函数做参数，无需要函数名字，类似inline，使用了捕获列表
+	vstr.erase(itsiz, vstr.end());
+	priVec(vstr);
+}
+void signif_c10m()
+{
+	vector<string> vstr = { "signif","zun","good","student","charge" ,"fox","chage" };
+	shunxRes(vstr);
+	limitLen(vstr, 6);
+}
