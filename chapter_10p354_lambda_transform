@@ -1,0 +1,67 @@
+#include <string>
+#include <vector>
+#include<iostream>
+#include <algorithm>
+
+using namespace std;
+/**************谓词可以选择函数(名字)或者是lambda表达式，如果只允许一元谓词而参数二元或者多元就选择lambda表达式********************/
+/***一定要注意只有一个return返回的类型可以推断，如果多个不选择尾置返回类型，那额默认void都会出错，需要显示书写->返回值类型*****/
+//作为谓词的函数-->只需要函数名字
+string toUpper(string &s)
+{
+	auto it = begin(s);
+	while (it != end(s))
+	{
+		if (isupper(*it))
+		{
+			;
+		}
+		else
+		{
+			*it = toupper(*it);
+		}
+		it++;
+	}
+	return s;
+}
+//全部数转化为正数
+void transRes(vector<int> &vstr)
+{
+	transform(vstr.begin(), vstr.end(), vstr.begin(), [](int i) {return i > 0 ? i : -i; });
+}
+//将容器中字符串都转化为大写
+void transupRes(vector<string> &vstr)
+{
+	transform(vstr.begin(), vstr.end(), vstr.begin(), /*toUpper也可以完成需要，后面给出了lambda表达式*/
+		[](string &s)->string {
+		auto it = begin(s);
+		while (it != end(s))
+		{
+			if (isupper(*it))
+			{
+				//;
+			}
+			else
+			{
+				*it = toupper(*it);
+			}
+			it++;
+		}
+		return s;
+	});//最后一个参数改变的是具体的一个子元素变化情况
+}
+//count_if函数统计出来和某个长度比较的数目
+size_t contif(vector<string> &vstr,size_t sz)
+{
+	size_t siz = count_if(vstr.begin(), vstr.end(), [sz](string &s) {return s.size() >= sz; });
+	return siz;
+}
+//测试函数
+void signif_c10m()
+{
+	vector<string> vstr = { "signif","zun","good","student","charge" ,"fox","chage" };
+	/*auto cnt = contif(vstr, 4);
+	cout << cnt << endl;*/
+	transupRes(vstr);
+	priVec(vstr);
+}
