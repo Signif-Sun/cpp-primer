@@ -1,0 +1,48 @@
+#include <string>
+#include <vector>
+#include <algorithm>   //find不在其中？？？what
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+/*-----------chapter_11-----p378_test11.8-采取vector和map两种方式保存不重复元素---------start----------------*/
+void unmulti_vector()
+{
+	vector<string> vstr;
+	string word;
+	cin >> word;
+	//使用push_back方法添加元素
+	vstr.push_back(word);
+	while (cin >> word && word != "end")
+	{
+		auto it = vstr.begin();
+		//判断不存在的方法，使用find查找，每次循环重新定义迭代器位置，找不到元素返回迭代器指向尾后
+		if (find(it, vstr.end(), word) != vstr.end())
+		{
+			;
+		}
+		else
+		{
+			vstr.push_back(word);
+		}
+	}
+	priVec(vstr);
+}
+
+void unmulti_map()
+{
+	map<string, size_t> mss;
+	string word;
+	//定义结束标记
+	while (cin >> word && word != "end")
+	{
+		++mss[word];  //[]优先级高于++
+	}
+	for (auto s : mss)  //s是pair类型，访问元素.first/second一共两个
+	{
+		cout << s.first << ":" << s.second << "\n";
+	}
+	cout << endl;
+}
+/*-----------chapter_11-----p378_test11.8-采取vector和map两种方式保存不重复元素---------end----------------*/
