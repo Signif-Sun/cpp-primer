@@ -45,4 +45,26 @@ void unmulti_map()
 	}
 	cout << endl;
 }
+
+/*------------采取pair方法统计不重复单词数目------------------*/
+void unmulti_pair()
+{
+	map<string, int> msi;
+	string word;
+	while (cin >> word && word != "end")
+	{
+		//pair成员first是迭代器，second是bool值，其中非迭代器insert返回返回一个pair类型
+		auto pai = msi.insert(pair<string, int>(word, 1));
+		if (!pai.second)
+		{
+			++pai.first->second;  
+		}
+	}
+	auto mit = msi.begin();
+	while (mit != msi.end())
+	{
+		cout << mit->first << ":" << mit->second << "\n";
+		mit++;
+	}
+}
 /*-----------chapter_11-----p378_test11.8-采取vector和map两种方式保存不重复元素---------end----------------*/
