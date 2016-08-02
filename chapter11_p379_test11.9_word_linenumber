@@ -1,0 +1,57 @@
+#include <string>
+#include <iostream>
+#include <map>
+#include <list>
+#include <sstring>
+
+using namespace std;
+
+/*-----------chapter_11-----p379_test11.9---给单词注明行号------start--------------*/
+//核心解决方案是采取了map<string, list<int>>数据结构
+//基本思想是先将原来的单词转化为小写并且去除掉原单词中的',''.'标点符号
+string &transl(string &s)
+{
+	size_t p;
+	for (p = 0; p < s.size(); p++)
+	{
+		if (s[p] >= 'A' && s[p] <= 'Z')
+		{
+			//将大写字母全部转换为小写字母
+			s[p] -= ('A' - 'a');
+		}
+		if (s[p] == ',' || s[p] == '.')
+		{
+			//直接erase删除掉标点符号，如果是删除个数第二个参数不写，之后的会全部删除
+			s.erase(p, 1);
+		}
+	}
+	return s;
+}
+void map_lineno()
+{
+	map<string, list<int>> msl;  //重复的单词因为在list之下可以表示重复单词所在行数
+	string word;
+	string line;
+	int lineno = 0;
+	while (getline(cin, line) && line != "quit")
+	{
+		lineno++;
+		istringstream iss(line);//构造字符串流读取单词
+		while (iss >> word)
+		{
+			msl[transl(word)].push_back(lineno);
+		}
+	}
+	for (auto sc : msl)
+	{
+		cout << sc.first << "--";
+		//每个单词后面的list长度不一定，和单词出现的次数是一致的，所以要单独读出
+		for (auto li : sc.second)
+		{
+			cout << li << " ";
+		}
+		//cout << sc.second[0] << endl;
+		cout << "line" << endl;
+	}
+}
+/*-----------chapter_11-----p379_test11.9---给单词注明行号------end--------------*/
