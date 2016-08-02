@@ -1,0 +1,41 @@
+#include <string>
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+/*-----------chapter_11-----p376_test11.4---忽略大小写以及单词中的',''.'标点符号统计单词数目----start---------------*/
+//基本思想是先将原来的单词转化为小写并且去除掉原单词中的',''.'标点符号
+string &trans(string &s)
+{
+	size_t p;
+	for (p = 0; p < s.size(); p++)
+	{
+		if (s[p] >= 'A' && s[p] <= 'Z')
+		{
+			//将大写字母全部转换为小写字母
+			s[p] -= ('A' - 'a');
+		}
+		if (s[p] == ',' || s[p] == '.')
+		{
+			//直接erase删除掉标点符号，如果是删除个数第二个参数不写，之后的会全部删除
+			s.erase(p, 1);
+		}
+	}
+	return s;
+}
+
+void map_count()
+{
+	map<string, size_t> mss;
+	string s;
+	while (cin >> s && s != "quit")
+	{
+		++mss[trans(s)];//在参数其中直接转换
+	}
+	for (auto sc : mss)
+	{
+		cout << sc.first << "--" << sc.second << " times" << endl;
+	}
+}
+/*-----------chapter_11-----p376_test11.4---忽略大小写以及单词中的',''.'标点符号统计单词数目----end--------------*/
