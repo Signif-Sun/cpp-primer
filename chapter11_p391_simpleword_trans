@@ -1,0 +1,45 @@
+#include <string>
+#include <iostream>
+#include <map>
+#include <sstring>
+
+using namespace std;
+
+/*-----------chapter_11-----p391_简化单词转换-例如u-you，msg-message-----start--------------*/
+//------------为需要转换的单词提供库，使用map的方式，原单词作为关键字找到映射值----
+string &wtrans(string &s)
+{
+	map<string, string> mss;
+	mss.insert({"k","okay"});
+	mss.insert(make_pair("y", "why"));
+	mss.insert(map<string, string>::value_type("r", "are"));
+	mss.insert(pair<string,string>("u","you"));
+	mss.insert(pair<string, string>("pic", "picture"));
+	mss.insert(pair<string, string>("thk", "thanks!"));
+	mss.insert(pair<string, string>("snd", "send"));
+	mss.insert(pair<string, string>("msg", "message"));
+	if (mss.find(s) != mss.end())
+	{
+		s = mss[s];
+	}
+	else
+	{
+		;
+	}
+	return s;
+}
+
+void word_trans()
+{
+	string line;
+	string word;
+	while (getline(cin, line) && line != "quit")
+	{
+		istringstream iss(line); //创建字符串流，来诸葛改变，哈哈哈
+		while (iss >> word)
+		{
+			cout << wtrans(word) << " ";
+		}
+	}
+}
+/*-----------chapter_11-----p391_简化单词转换-例如u-you，msg-message-----end--------------*/
