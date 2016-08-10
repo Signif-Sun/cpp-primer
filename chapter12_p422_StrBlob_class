@@ -1,0 +1,96 @@
+#pragma once
+#include "stdafx.h"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <memory>
+#include <stdlib.h>
+
+using namespace std;
+
+class StrBlob {
+
+public:
+	//默认初始化方式
+	StrBlob():curr(0) {};
+	//这个初始化还是很闹心的，使用不定长参数列表{}||需要指出类型|||来初始化，原理是vector<string> vs({不定长列表});
+	StrBlob(initializer_list<string> ils,size_t st):svs(make_shared<vector<string>>(ils)),curr(st) {};
+	//获得指定位置的值
+	string current_v(size_t &curr) {
+		return (*svs).at(curr);
+	};
+	//因为位置隐私，所以设置获取当前位置方法
+	size_t current();
+	//前一个
+	size_t font(size_t &curr, string err);
+	//后一个
+	size_t back(size_t &curr, string err);
+	//添加元素
+	StrBlob &push_v(string s);
+	/*void push_v(string s) { svs->push_back(s); 
+	curr++;
+	}*/
+
+
+private:
+	shared_ptr<vector<string>> svs;
+	size_t curr;
+};
+
+//必须加上函数的作用域，也就是类作用域，只有这样才可以做到类内声明类外定义的目的
+size_t StrBlob::current()
+{
+	return curr;
+}
+
+size_t StrBlob::font(size_t &curr,string err)
+{
+	if (curr > 0)
+	{
+		return --curr;
+	}
+	else
+	{
+		throw out_of_range(err);
+	}
+}
+
+size_t StrBlob::back(size_t &curr, string err)
+{
+	if (curr < svs->size())
+	{
+		return ++curr;
+	}
+	else
+	{
+		throw out_of_range(err);
+	}
+}
+
+StrBlob &StrBlob::push_v(string s)
+{
+	svs->push_back(s);
+	curr++;
+	return *this;
+}
+
+
+//调用函数，从文件中读取内容
+void strblob()
+{
+	StrBlob strb({"start"},0);
+	ifstream ifs("signif_phones.txt");
+	string line;
+	string word;
+	while (getline(ifs, line))
+	{
+		istringstream iss(line);
+		while (iss >> word)
+		{
+			strb.push_v(word);
+		}
+	}
+	size_t pos = strb.current();
+	//size_t pos = strb.font(pos1,"a!!out of range");
+	cout << strb.current_v(pos);
+}
