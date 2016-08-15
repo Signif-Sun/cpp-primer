@@ -1,0 +1,62 @@
+using namespace std
+
+class HasPtr {
+public:
+	HasPtr() {};
+	//合成构造函数
+	HasPtr(const string &s = string()):str(new string(s)),cnt(new size_t(1)),i(0){}
+	//拷贝构造函数
+	HasPtr(const HasPtr &hptr) : str(hptr.str),cnt(hptr.cnt),i(hptr.i){
+		++*cnt;
+	}
+	//拷贝赋值运算符
+	HasPtr& operator=(HasPtr &hptr);
+	//析构函数
+	~HasPtr() {
+		if (--(*cnt) == 0)
+		{
+			delete str;
+			delete cnt;
+		}
+	}
+	//获取字符串
+	string getstr()
+	{
+		return *str;
+	}
+	//获取引用计数
+	size_t getcnt()
+	{
+		return *cnt;
+	}
+	//友元函数
+	friend void swap(HasPtr &hp1, HasPtr &hp2);
+
+private:
+	string *str;
+	size_t *cnt;
+	int i;
+};
+
+//拷贝赋值运算符，类外定义
+HasPtr& HasPtr::operator=(HasPtr &hptr) {
+	*(hptr.cnt)++;
+
+	str = hptr.str;
+	cnt = hptr.cnt;
+	//
+	if (--(*cnt) == 0)
+	{
+		delete str;
+		delete cnt;
+	}
+	i = hptr.i;
+
+	return *this;
+}
+//交换函数，使用重载方式重新定义，内联函数为了迎合swap函数自身为了优化目的
+inline void swap(HasPtr &hp1, HasPtr &hp2)
+{
+	swap(hp1.str, hp2.str);
+	swap(hp1.i, hp2.i);
+}
