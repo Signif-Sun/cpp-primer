@@ -1,0 +1,51 @@
+#include "stdafx.h"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std
+
+//创建比较类
+class CmpVal {
+public:
+	CmpVal(string s) :val(s) {}
+	//使用函数调用运算符
+	bool operator()(string &s1)
+	{
+		return s1 == val;
+	}
+
+private:
+	string val;
+};
+//读入操作，注意输入应用做参数
+void readVector(istream &in, vector<string> &vs)
+{
+	string s1;
+	//若输入应用在内部需要初始化，像这样子
+	//istream &ind = cin;
+	while (in >> s1 && s1 != "quit")
+	{
+		vs.push_back(s1);
+	}
+
+}
+
+void func_use()
+{
+	vector<string> vs;
+	readVector(cin,vs);
+	//该类名调用函数，何时可以作为指针传入count_if做参数
+	CmpVal cmpval("signif");
+	//调用测试函数调用运算符
+	string ss = "good";
+	auto bb = cmpval.operator()(ss);
+	auto beg = vs.begin();
+	//algorithm头文件中
+	auto cnt = count_if(vs.begin(), vs.end(), cmpval);
+	auto ncnt = vs.size() - cnt;
+	cout << bb << endl;
+	cout << "the same:" << " occour tms: " << cnt << endl;
+	cout << "the same:" << " occour tms: " <<  ncnt << endl;
+	
+}
