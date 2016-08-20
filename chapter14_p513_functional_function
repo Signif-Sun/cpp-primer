@@ -1,0 +1,70 @@
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+#include <map>
+#include <functional>
+
+using namespace std;
+/*-----------chapter14_p513_functional_function-function模板转换统一函数指针模式---------start----------------*/
+//函数对象类
+class Divide {
+public:
+
+	double operator()(double a, double b)
+	{
+		return a / b;
+	}
+};
+//函数add就是函数指针
+double add(double a, double b)
+{
+	return a + b;
+}
+//采取标准库函数对象的函数
+double multi(double a, double b)
+{
+	multiplies<double> muld;
+	return muld(a, b);
+}
+//同上
+double minus_res(double a, double b)
+{
+	minus<double> muld;
+	return muld(a, b);
+}
+
+//采取lambda计算的函数
+double quyu(double c, double d)
+{
+	auto lamb = [](double a,double b)->double {
+		return (int)a % (int)b;
+	};
+	return lamb(c,d);
+}
+
+void chapter14()
+{
+	//创建一个对应关系的map表，value_type是function模板类，将所有的一致对象调用形式格式化为function模板类
+	//使用方法function<返回值类型（参数类型，参数类型，...)> f1 = 函数指针
+	map<string, function<double(double, double)>> msf
+		= { 
+			{"+",add}, 
+			{"-",minus<double>() }, 
+			{ "%",[](double a,double b)->double {
+		return (int)a % (int)b; }},
+	//函数对象类，即：重载函数调用操作符的类
+			{"*",multi},{"/",Divide()} 
+	};
+	//以下是上述的方法逐一添加，非初始化
+	/*msf.insert({"+",add});
+	msf.insert({"-",minus<double>()});
+	msf.insert({"/",[](double a,double b)->double {
+		return (int)a % (int)b;
+	} });*/
+	//msf.insert({ "/",Divide() });
+/*-----------chapter14_p513_functional_function-function模板转换统一函数指针模式---------end-----------------*/
+
+	//测试函数
+	auto res = msf["/"](1, 3);
+	cout << res << endl;
+}
