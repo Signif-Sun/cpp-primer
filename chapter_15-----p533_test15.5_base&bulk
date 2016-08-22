@@ -1,0 +1,58 @@
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+/*-----------chapter_15-----p533_test15.5---基类派生类使用------start--------------*/
+//定义不打折时候的基类
+class BasePrice {
+
+public:
+	BasePrice() {};
+	BasePrice(string s, double d) : number(s), price(d) {};
+	string isbn() {
+		return number;
+	}
+	virtual double getcnt(size_t n) {
+		return price * n;
+	}
+private:
+	string number;
+	double price;
+};
+//定义打折后的派生类，继承基类
+class DiscountPrice : public BasePrice {
+
+public:
+	DiscountPrice() {}
+	//派生类初始化方法
+	DiscountPrice(string s, double d, size_t n, size_t dp) :BasePrice(s, d), minnum(n), discount(dp) {}
+	//派生类覆写掉虚函数
+	double getcnt(size_t num) override {
+		if (num > minnum)
+		{
+			double dis = BasePrice::getcnt(num);
+			return static_cast<double>(discount) / 10 * dis;
+		}
+		else
+		{
+			return BasePrice::getcnt(num);
+		}
+		
+	}
+private:
+	size_t minnum;
+	//折扣数
+	size_t discount;
+};
+//驱动测试函数
+void book_price()
+{
+	DiscountPrice dispri("signif-001", 63.52, 3, 3);
+	//BasePrice dispri("signif-001", 63.52);
+	double pri = dispri.getcnt(5);
+	string name = dispri.isbn();
+	cout << name << "--"<< pri << endl;
+}
+/*-----------chapter_15-----p533_test15.5---基类派生类使用------end--------------*/
