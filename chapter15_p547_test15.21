@@ -1,0 +1,56 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*-----------------chapter15_p547_test15.21--访问权限设计测试--------------start----------------*/
+//
+class BasePic_2D {
+public:
+	string isbn()
+	{
+		return sizeNumber;
+	}
+
+protected:
+	size_t xlabel;
+	size_t y_label;
+
+private:
+	string sizeNumber;
+};
+
+//this bulk is public，it's bulk can get it's number
+class Pic_3D_pub :public BasePic_2D{
+
+protected:
+	size_t z_label;
+};
+
+//this bulk is private，it's bulk can't get it's number
+class Pic_3D_priv :private BasePic_2D {
+
+protected:
+	size_t z_label;
+};
+
+class Pic_4D_pub : public Pic_3D_priv {
+
+};
+
+class Pic_4D_pub2 : public Pic_3D_pub {
+
+};
+
+//this is test function
+void pic_test()
+{
+	Pic_4D_pub pic4;
+	//string name = pic4.isbn();  //can't visit,because it's base is private
+
+	Pic_4D_pub2 pic42;
+	string name2 = pic42.isbn();
+	cout << name2 << endl;
+}
+/*-----------------chapter15_p547_test15.21--访问权限设计测试-------------end---------------*/
