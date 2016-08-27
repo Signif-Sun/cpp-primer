@@ -1,0 +1,70 @@
+#pragma once
+
+/*-----------chapter16_p583_template_test---函数模板对于工作量的减少受益----start---------------*/
+
+//首先一般情况下将模板类定义在头文件中，比较数值大小
+template <typename T> int comp(const T &t1, const T &t2)
+{
+	if (t1 < t2)
+	{
+		return -1;
+	}
+	if (t2 < t1)
+	{
+		return 1;
+	}
+	if(t1 == t2)
+	{
+		return 0;
+	}
+}
+
+//比较不同数字类型例如int，double，但是不可以比较string和数字类型
+template <typename T,typename Y> int comp2(const T &t1, const Y &t2)
+{
+	if (t1 < t2)
+	{
+		return -1;
+	}
+	if (t2 < t1)
+	{
+		return 1;
+	}
+	if (t1 == t2)
+	{
+		return 0;
+	}
+}
+
+//比较非类型参数，也就是常量字符串
+template <unsigned M,unsigned N> int compzmz(const char (&t1)[M], const char (&t2)[N])
+{
+	if (t1 < t2)
+	{
+		return -1;
+	}
+	if (t2 < t1)
+	{
+		return 1;
+	}
+	if (t1 == t2)
+	{
+		return 0;
+	}
+}
+//寻找某个值，其中I迭代器，迭代器不能设置为常量类型const，因为需要增加来试图比较
+template <typename I, typename T> I find_it(I &b, I &e, const T &t)
+{
+	for (; b != e; b++)
+	{
+		if(*b == t)
+		{
+			return b;
+		}
+		
+	}
+	return b;
+	
+}
+
+/*-----------chapter16_p583_template_test---函数模板对于工作量的减少受益----end---------------*/
