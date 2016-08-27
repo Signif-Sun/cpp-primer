@@ -67,4 +67,15 @@ template <typename I, typename T> I find_it(I &b, I &e, const T &t)
 	
 }
 
+//还可以如此定义，允许在模板参数列表中出现常规数据类型
+//本函数来处理任意类型数组，任意长数组
+template <typename T, size_t N> void printz(const T(&t)[N])
+{
+	for (int i = 0; i < N; i++)
+	{
+		cout << t[i] << " ";
+	}
+	cout << endl;
+}
+
 /*-----------chapter16_p583_template_test---函数模板对于工作量的减少受益----end---------------*/
