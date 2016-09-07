@@ -1,0 +1,69 @@
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+#include <vector>
+#include <memory>
+
+using namespace std;
+
+//模板类的一个demo，然后测试类内声明内类定义
+template<typename T> class Demo {
+public:
+	Demo() {}
+	Demo(int i, double d, string s, shared_ptr<T> p) :cx(i), jg(d), pl(s),ptr(p) {}
+	//类内声明内类定义
+	int getid();
+	//获取其长度
+	size_t getsize()
+	{
+		return ptr->size();
+	}
+	//获取内容
+	string getinfo(size_t n)
+	{
+		size_t sz = getsize();
+		if (n <= sz && n >= 0)
+		{
+			return (*ptr)[n];
+		}
+		else
+		{
+			cout << "mdzz!" << endl;
+			return 0;
+		}
+			
+	}
+
+
+private:
+	//利用别名定义
+	typedef int id;
+	typedef double price;
+	typedef string name;
+
+	id cx;  //
+	price jg;
+	name pl;  //品类
+	shared_ptr<T> ptr;
+	
+};
+//类外定义
+template <typename T> int Demo<T>::getid()
+{
+	return cx;
+}
+
+
+void startTest()
+{
+	//用来初始化智能指针
+	vector<string> vs = {"signif","sun","ok"};
+	shared_ptr<vector<string>> svs = make_shared<vector<string>>(vs);
+	//初始化模板
+	Demo<vector<string>> dvs(13,12.56,"sxh",svs);
+	//获取长度
+	auto size = dvs.getsize();
+	//获取其中信息
+	auto info = dvs.getinfo(0);
+	cout << info << endl;
+}
