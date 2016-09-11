@@ -1,0 +1,22 @@
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+#include <list>
+#include <tuple>
+
+void tuple_t()
+{
+	//tuple类下面这种方式只能直接初始化
+	tuple<string, size_t, list<string>> item ("signif", 0104, {"hello","sig","nif"});
+
+	//获取tuple的数据类型，参数是tuple模板的类型
+	tuple_element<2,decltype(item)>::type ty = get<2>(item);
+
+	//获取tuple类的参数数目
+	size_t sz = tuple_size<decltype(item)>::value;
+
+	//获取了list<string>类型，然后获取最后一个元素
+	cout << ty.back() << endl;  
+
+	cout << sz << endl;
+}
