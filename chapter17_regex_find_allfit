@@ -33,3 +33,24 @@ void reg()
 	}
 	std::cout << std::endl;
 }
+
+
+//使用命名空间，避免麻烦
+using namespace std;
+
+//检测邮箱是否是163邮箱,必须字母开头，数字开头死掉，@163.com结尾
+bool jc163(string str)
+{
+	string gz("[[:alnum:]]*");
+	//^保证了必须是字母开头，$保证了必须是@163.com结尾
+	gz = "^[[:alpha:]]+" + gz + "\\@163\\.com$";
+	//封装成正则表达式
+	regex r(gz);
+	smatch pp;
+	//识别方法只是识别第一个满足条件的情况
+	if(regex_search(str,pp,r))
+	{
+		return 1;
+	}
+	return 0;
+}
