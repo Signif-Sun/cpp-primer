@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <map>
-#include <sstring>
+#include <sstream>
 
 using namespace std;
 
@@ -35,7 +35,7 @@ void word_trans()
 	string word;
 	while (getline(cin, line) && line != "quit")
 	{
-		istringstream iss(line); //创建字符串流，来诸葛改变，哈哈哈
+		istringstream iss(line); //创建字符串流，来逐个改变，哈哈哈
 		while (iss >> word)
 		{
 			cout << wtrans(word) << " ";
