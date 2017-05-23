@@ -1,0 +1,53 @@
+#include <iostream>
+
+#define FILENAMESIZE 20
+
+using namespace std;
+
+
+struct films {
+	char name[20];
+	double charge;
+	int rating;
+	films* next;
+};
+
+
+class getFilmLists {
+public:
+	films* getFilms() {
+		films* current, *prev;
+		films* head = NULL;
+		char input[FILENAMESIZE];
+		puts("please inut the file name which you want to see!");
+		while (gets_s(input, FILENAMESIZE) != NULL && input[0] != '\0') {
+			current = (films*)malloc(sizeof(films));
+			if (head == NULL) {
+				head = current;
+			}
+			else {
+				prev->next = current;
+			}
+			current->next = NULL;
+			strncpy_s(current->name, input,FILENAMESIZE);
+			puts("please input the charge and rating!");
+			scanf_s("%lf%d", &current->charge, &current->rating);
+			while (getchar() != '\n') {
+				continue;
+			}
+			puts("please input anthor film's infomation or input null to exit!");
+			prev = current;
+		}
+		return head;
+	}
+	void inputFilmLists() {
+		int number = 1;
+		films* filmsCollection = getFilms();
+		while (filmsCollection != NULL) {
+			printf("the film%d's name is <<%s>> and it's charge and rating are %4.2lf,%d!\n",number,filmsCollection->name, filmsCollection->charge, filmsCollection->rating);
+			number++;
+			filmsCollection = filmsCollection->next;
+		}
+		puts("that is all,many thx~");
+	}
+};
